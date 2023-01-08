@@ -24,3 +24,12 @@ def find_pacman(map):
                 pacman_y = y
 
     return pacman_x, pacman_y
+
+
+def move_pacman(map, next_pacman_x, next_pacman_y):
+    pacman_x, pacman_y = find_pacman(map)
+
+    # clears the position where pacman was
+    map[pacman_x] = map[pacman_x][0:pacman_y] + '.' + map[pacman_x][pacman_y + 1:]
+    # moves pacman to his new position
+    map[next_pacman_x] = map[next_pacman_x][0:next_pacman_y] + '@' + map[next_pacman_x][next_pacman_y + 1:]
