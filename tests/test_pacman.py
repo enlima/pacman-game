@@ -1,6 +1,6 @@
 import unittest
 
-from pacman import find_pacman
+from pacman_game.pacman import find_pacman
 
 
 class PacmanTest(unittest.TestCase):
