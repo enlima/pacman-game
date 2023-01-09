@@ -1,3 +1,5 @@
+from pacman_game.ui import ui_print
+
 # @ -> pacman
 # G -> ghosts
 # P -> pills
@@ -33,3 +35,8 @@ def move_pacman(map, next_pacman_x, next_pacman_y):
     map[pacman_x] = map[pacman_x][0:pacman_y] + '.' + map[pacman_x][pacman_y + 1:]
     # moves pacman to his new position
     map[next_pacman_x] = map[next_pacman_x][0:next_pacman_y] + '@' + map[next_pacman_x][next_pacman_y + 1:]
+
+
+ui_print(map)
+move_pacman(map, 3, 6)
+ui_print(map)
