@@ -55,6 +55,12 @@ class GameTest(unittest.TestCase):
     def test_valid_key(self):
         self.assertTrue(is_valid_key('a'))
         self.assertTrue(is_valid_key('A'))
+        self.assertTrue(is_valid_key('w'))
+        self.assertTrue(is_valid_key('W'))
+        self.assertTrue(is_valid_key('d'))
+        self.assertTrue(is_valid_key('D'))
+        self.assertTrue(is_valid_key('s'))
+        self.assertTrue(is_valid_key('S'))
 
     def test_invalid_key(self):
         self.assertFalse(is_valid_key('x'))
