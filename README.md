@@ -1,7 +1,7 @@
-# Pac-Man Python
+# Pac-Man Game
 
-Project developed from [this course](https://www.udemy.com/course/python-102-developing-a-text-based-pac-man-game/),
-created by [Mauricio Aniche](https://github.com/mauricioaniche).
+Project developed based on [this course](https://www.udemy.com/course/python-102-developing-a-text-based-pac-man-game/)
+from [Mauricio Aniche](https://github.com/mauricioaniche).
 
 ### Technologies and Tools
 
