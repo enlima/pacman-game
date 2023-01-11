@@ -1,9 +1,9 @@
 import unittest
 
-from pacman_game.pacman import find_pacman, move_pacman, play, is_valid_key
+from pacman.game import find_pacman, move_pacman, play, is_valid_key
 
 
-class PacmanTest(unittest.TestCase):
+class GameTest(unittest.TestCase):
 
     def test_find_pacman(self):
         map = [

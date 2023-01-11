@@ -1,4 +1,4 @@
-from pacman_game.ui import ui_print
+from pacman.ui import ui_print
 
 # @ -> pacman
 # G -> ghosts
