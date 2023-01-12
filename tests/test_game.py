@@ -1,6 +1,6 @@
 import unittest
 
-from pacman.game import find_pacman, move_pacman, play, is_valid_key
+from pacman.game import find_pacman, move_pacman, play, is_valid_key, is_within_borders, is_a_wall, is_a_ghost
 
 
 class GameTest(unittest.TestCase):
@@ -52,7 +52,7 @@ class GameTest(unittest.TestCase):
         self.assertEqual(position_x, 4)
         self.assertEqual(position_y, 1)
 
-    def test_valid_key(self):
+    def test_is_valid_key(self):
         self.assertTrue(is_valid_key('a'))
         self.assertTrue(is_valid_key('A'))
         self.assertTrue(is_valid_key('w'))
@@ -61,8 +61,6 @@ class GameTest(unittest.TestCase):
         self.assertTrue(is_valid_key('D'))
         self.assertTrue(is_valid_key('s'))
         self.assertTrue(is_valid_key('S'))
-
-    def test_invalid_key(self):
         self.assertFalse(is_valid_key('x'))
         self.assertFalse(is_valid_key('y'))
 
@@ -133,3 +131,45 @@ class GameTest(unittest.TestCase):
 
         self.assertEqual(position_x, 4)
         self.assertEqual(position_y, 5)
+
+    def test_within_borders(self):
+        map = [
+            "|--------|",
+            "|G..|..G.|",
+            "|...PP...|",
+            "|G.....|.|",
+            "|......@.|",
+            "|--------|"
+        ]
+
+        self.assertTrue(is_within_borders(map, 5, 8))
+        self.assertTrue(is_within_borders(map, 4, 6))
+        self.assertFalse(is_within_borders(map, 6, 10))
+        self.assertFalse(is_within_borders(map, -1, 5))
+
+    def test_is_a_wall(self):
+        map = [
+            "|--------|",
+            "|G..|..G.|",
+            "|...PP...|",
+            "|G.....|.|",
+            "|......@.|",
+            "|--------|"
+        ]
+
+        self.assertTrue(is_a_wall(map, 4, 9))
+        self.assertTrue(is_a_wall(map, 5, 7))
+        self.assertFalse(is_a_wall(map, 4, 8))
+
+    def test_is_a_ghost(self):
+        map = [
+            "|--------|",
+            "|G..|..G.|",
+            "|...PP...|",
+            "|G@....|.|",
+            "|........|",
+            "|--------|"
+        ]
+
+        self.assertTrue(is_a_ghost(map, 3, 1))
+        self.assertFalse(is_a_ghost(map, 3, 3))
