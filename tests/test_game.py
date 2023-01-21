@@ -7,7 +7,7 @@ from pacman.game import find_pacman, move_pacman, play, is_valid_key, is_within_
 class GameTest(unittest.TestCase):
 
     def test_find_pacman(self):
-        map = [
+        game_map = [
             "|--------|",
             "|G..|..G.|",
             "|...PP...|",
@@ -16,13 +16,13 @@ class GameTest(unittest.TestCase):
             "|--------|"
         ]
 
-        position_x, position_y = find_pacman(map)
+        position_x, position_y = find_pacman(game_map)
 
         self.assertEqual(position_x, 3)
         self.assertEqual(position_y, 5)
 
     def test_find_pacman_when_pacman_doesnt_exist(self):
-        map = [
+        game_map = [
             "|--------|",
             "|G..|..G.|",
             "|...PP...|",
@@ -31,13 +31,13 @@ class GameTest(unittest.TestCase):
             "|--------|"
         ]
 
-        position_x, position_y = find_pacman(map)
+        position_x, position_y = find_pacman(game_map)
 
         self.assertEqual(position_x, -1)
         self.assertEqual(position_y, -1)
 
     def test_move_pacman(self):
-        map = [
+        game_map = [
             "|--------|",
             "|G..|..G.|",
             "|...PP...|",
@@ -46,9 +46,9 @@ class GameTest(unittest.TestCase):
             "|--------|"
         ]
 
-        move_pacman(map, 4, 1)
+        move_pacman(game_map, 4, 1)
 
-        position_x, position_y = find_pacman(map)
+        position_x, position_y = find_pacman(game_map)
 
         self.assertEqual(position_x, 4)
         self.assertEqual(position_y, 1)
@@ -66,7 +66,7 @@ class GameTest(unittest.TestCase):
         self.assertFalse(is_valid_key('y'))
 
     def test_play_move_left(self):
-        map = [
+        game_map = [
             "|--------|",
             "|G..|..G.|",
             "|...PP...|",
@@ -75,15 +75,15 @@ class GameTest(unittest.TestCase):
             "|--------|"
         ]
 
-        play(map, 'a')
+        play(game_map, 'a')
 
-        position_x, position_y = find_pacman(map)
+        position_x, position_y = find_pacman(game_map)
 
         self.assertEqual(position_x, 3)
         self.assertEqual(position_y, 4)
 
     def test_play_move_right(self):
-        map = [
+        game_map = [
             "|--------|",
             "|G..|..G.|",
             "|...PP...|",
@@ -92,15 +92,15 @@ class GameTest(unittest.TestCase):
             "|--------|"
         ]
 
-        play(map, 'd')
+        play(game_map, 'd')
 
-        position_x, position_y = find_pacman(map)
+        position_x, position_y = find_pacman(game_map)
 
         self.assertEqual(position_x, 3)
         self.assertEqual(position_y, 6)
 
     def test_play_move_up(self):
-        map = [
+        game_map = [
             "|--------|",
             "|G..|..G.|",
             "|..PP....|",
@@ -109,15 +109,15 @@ class GameTest(unittest.TestCase):
             "|--------|"
         ]
 
-        play(map, 'w')
+        play(game_map, 'w')
 
-        position_x, position_y = find_pacman(map)
+        position_x, position_y = find_pacman(game_map)
 
         self.assertEqual(position_x, 2)
         self.assertEqual(position_y, 5)
 
     def test_play_move_down(self):
-        map = [
+        game_map = [
             "|--------|",
             "|G..|..G.|",
             "|..PP....|",
@@ -126,15 +126,15 @@ class GameTest(unittest.TestCase):
             "|--------|"
         ]
 
-        play(map, 's')
+        play(game_map, 's')
 
-        position_x, position_y = find_pacman(map)
+        position_x, position_y = find_pacman(game_map)
 
         self.assertEqual(position_x, 4)
         self.assertEqual(position_y, 5)
 
     def test_within_borders(self):
-        map = [
+        game_map = [
             "|--------|",
             "|G..|..G.|",
             "|...PP...|",
@@ -143,13 +143,13 @@ class GameTest(unittest.TestCase):
             "|--------|"
         ]
 
-        self.assertTrue(is_within_borders(map, 5, 8))
-        self.assertTrue(is_within_borders(map, 4, 6))
-        self.assertFalse(is_within_borders(map, 6, 10))
-        self.assertFalse(is_within_borders(map, -1, 5))
+        self.assertTrue(is_within_borders(game_map, 5, 8))
+        self.assertTrue(is_within_borders(game_map, 4, 6))
+        self.assertFalse(is_within_borders(game_map, 6, 10))
+        self.assertFalse(is_within_borders(game_map, -1, 5))
 
     def test_is_a_wall(self):
-        map = [
+        game_map = [
             "|--------|",
             "|G..|..G.|",
             "|...PP...|",
@@ -158,12 +158,12 @@ class GameTest(unittest.TestCase):
             "|--------|"
         ]
 
-        self.assertTrue(is_a_wall(map, 4, 9))
-        self.assertTrue(is_a_wall(map, 5, 7))
-        self.assertFalse(is_a_wall(map, 4, 8))
+        self.assertTrue(is_a_wall(game_map, 4, 9))
+        self.assertTrue(is_a_wall(game_map, 5, 7))
+        self.assertFalse(is_a_wall(game_map, 4, 8))
 
     def test_is_a_ghost(self):
-        map = [
+        game_map = [
             "|--------|",
             "|G..|..G.|",
             "|...PP...|",
@@ -172,11 +172,11 @@ class GameTest(unittest.TestCase):
             "|--------|"
         ]
 
-        self.assertTrue(is_a_ghost(map, 3, 1))
-        self.assertFalse(is_a_ghost(map, 3, 3))
+        self.assertTrue(is_a_ghost(game_map, 3, 1))
+        self.assertFalse(is_a_ghost(game_map, 3, 3))
 
     def test_remaining_pills(self):
-        map_with_pills = [
+        game_map_with_pills = [
             "|--------|",
             "|G..|..G.|",
             "|...PP...|",
@@ -185,7 +185,7 @@ class GameTest(unittest.TestCase):
             "|--------|"
         ]
 
-        map_without_pills = [
+        game_map_without_pills = [
             "|--------|",
             "|G..|..G.|",
             "|...@....|",
@@ -194,5 +194,5 @@ class GameTest(unittest.TestCase):
             "|--------|"
         ]
 
-        self.assertTrue(is_there_remaining_pills(map_with_pills))
-        self.assertFalse(is_there_remaining_pills(map_without_pills))
+        self.assertTrue(is_there_remaining_pills(game_map_with_pills))
+        self.assertFalse(is_there_remaining_pills(game_map_without_pills))

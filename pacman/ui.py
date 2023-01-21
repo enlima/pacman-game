@@ -1,5 +1,5 @@
-def ui_print(map):
-    for row in map:
+def ui_print(game_map):
+    for row in game_map:
         for column in row:
             print(column, end='')
         print('')

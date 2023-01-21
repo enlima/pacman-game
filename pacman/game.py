@@ -5,7 +5,7 @@ from pacman.ui import ui_print
 # P -> pills
 # . -> empty spaces
 # | and - -> walls
-map = [
+game_map = [
     "|--------|",
     "|G..|..G.|",
     "|...PP...|",
@@ -15,19 +15,19 @@ map = [
 ]
 
 
-def play(map, key):
+def play(game_map, key):
     if is_valid_key(key):
-        next_x_pos, next_y_pos = calculate_next_position(map, key)
+        next_x_pos, next_y_pos = calculate_next_position(game_map, key)
 
-        if is_within_borders(map, next_x_pos, next_y_pos) and not is_a_wall(map, next_x_pos, next_y_pos):
-            if is_a_ghost(map, next_x_pos, next_y_pos):
+        if is_within_borders(game_map, next_x_pos, next_y_pos) and not is_a_wall(game_map, next_x_pos, next_y_pos):
+            if is_a_ghost(game_map, next_x_pos, next_y_pos):
                 print("====================")
                 print("= GG Game Over! GG =")
                 print("====================")
             else:
-                move_pacman(map, next_x_pos, next_y_pos)
+                move_pacman(game_map, next_x_pos, next_y_pos)
 
-        if not is_there_remaining_pills(map):
+        if not is_there_remaining_pills(game_map):
             print("====================")
             print("= @@ YOU WON!!! @@ =")
             print("=     CONGRATS     =")
@@ -44,8 +44,8 @@ def is_valid_key(key):
     return False
 
 
-def calculate_next_position(map, key):
-    pacman_x, pacman_y = find_pacman(map)
+def calculate_next_position(game_map, key):
+    pacman_x, pacman_y = find_pacman(game_map)
     next_x_pos = pacman_x
     next_y_pos = pacman_y
 
@@ -62,59 +62,60 @@ def calculate_next_position(map, key):
     return next_x_pos, next_y_pos
 
 
-def find_pacman(map):
+def find_pacman(game_map):
     pacman_x = -1
     pacman_y = -1
 
-    for x in range(len(map)):
-        for y in range(len(map[x])):
-            if map[x][y] == '@':
+    for x in range(len(game_map)):
+        for y in range(len(game_map[x])):
+            if game_map[x][y] == '@':
                 pacman_x = x
                 pacman_y = y
 
     return pacman_x, pacman_y
 
 
-def is_within_borders(map, next_x_pos, next_y_pos):
-    number_of_rows = len(map)
+def is_within_borders(game_map, next_x_pos, next_y_pos):
+    number_of_rows = len(game_map)
     is_valid_x = 0 <= next_x_pos < number_of_rows
 
-    number_of_columns = len(map[0])
+    number_of_columns = len(game_map[0])
     is_valid_y = 0 <= next_y_pos < number_of_columns
 
     return is_valid_x and is_valid_y
 
 
-def is_a_wall(map, next_x_pos, next_y_pos):
-    return map[next_x_pos][next_y_pos] == '|' or map[next_x_pos][next_y_pos] == '-'
+def is_a_wall(game_map, next_x_pos, next_y_pos):
+    return game_map[next_x_pos][next_y_pos] == '|' or game_map[next_x_pos][next_y_pos] == '-'
 
 
-def is_a_ghost(map, next_x_pos, next_y_pos):
-    return map[next_x_pos][next_y_pos] == 'G'
+def is_a_ghost(game_map, next_x_pos, next_y_pos):
+    return game_map[next_x_pos][next_y_pos] == 'G'
 
 
-def is_there_remaining_pills(map):
-    for x in range(len(map)):
-        for y in range(len(map[x])):
-            if map[x][y] == 'P':
+def is_there_remaining_pills(game_map):
+    for x in range(len(game_map)):
+        for y in range(len(game_map[x])):
+            if game_map[x][y] == 'P':
                 return True
 
     return False
 
 
-def move_pacman(map, next_pacman_x, next_pacman_y):
-    pacman_x, pacman_y = find_pacman(map)
+def move_pacman(game_map, next_pacman_x, next_pacman_y):
+    pacman_x, pacman_y = find_pacman(game_map)
 
     # clears the position where pacman was
-    map[pacman_x] = map[pacman_x][0:pacman_y] + '.' + map[pacman_x][pacman_y + 1:]
+    game_map[pacman_x] = game_map[pacman_x][0:pacman_y] + '.' + game_map[pacman_x][pacman_y + 1:]
     # moves pacman to his new position
-    map[next_pacman_x] = map[next_pacman_x][0:next_pacman_y] + '@' + map[next_pacman_x][next_pacman_y + 1:]
+    game_map[next_pacman_x] = game_map[next_pacman_x][0:next_pacman_y] + '@' + game_map[next_pacman_x][
+                                                                               next_pacman_y + 1:]
 
 
-ui_print(map)
-play(map, 'x')
-ui_print(map)
-play(map, 'w')
-ui_print(map)
-play(map, 'a')
-ui_print(map)
+ui_print(game_map)
+play(game_map, 'x')
+ui_print(game_map)
+play(game_map, 'w')
+ui_print(game_map)
+play(game_map, 'a')
+ui_print(game_map)
