@@ -21,11 +21,17 @@ def play(map, key):
 
         if is_within_borders(map, next_x_pos, next_y_pos) and not is_a_wall(map, next_x_pos, next_y_pos):
             if is_a_ghost(map, next_x_pos, next_y_pos):
-                print("===================")
-                print("= @@ Game Over @@ =")
-                print("===================")
+                print("====================")
+                print("= GG Game Over! GG =")
+                print("====================")
             else:
                 move_pacman(map, next_x_pos, next_y_pos)
+
+        if not is_there_remaining_pills(map):
+            print("====================")
+            print("= @@ YOU WON!!! @@ =")
+            print("=     CONGRATS     =")
+            print("====================")
 
 
 def is_valid_key(key):
@@ -87,6 +93,15 @@ def is_a_ghost(map, next_x_pos, next_y_pos):
     return map[next_x_pos][next_y_pos] == 'G'
 
 
+def is_there_remaining_pills(map):
+    for x in range(len(map)):
+        for y in range(len(map[x])):
+            if map[x][y] == 'P':
+                return True
+
+    return False
+
+
 def move_pacman(map, next_pacman_x, next_pacman_y):
     pacman_x, pacman_y = find_pacman(map)
 
@@ -99,7 +114,7 @@ def move_pacman(map, next_pacman_x, next_pacman_y):
 ui_print(map)
 play(map, 'x')
 ui_print(map)
-play(map, 'd')
+play(map, 'w')
 ui_print(map)
-play(map, 's')
+play(map, 'a')
 ui_print(map)

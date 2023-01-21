@@ -1,6 +1,7 @@
 import unittest
 
-from pacman.game import find_pacman, move_pacman, play, is_valid_key, is_within_borders, is_a_wall, is_a_ghost
+from pacman.game import find_pacman, move_pacman, play, is_valid_key, is_within_borders, is_a_wall, is_a_ghost, \
+    is_there_remaining_pills
 
 
 class GameTest(unittest.TestCase):
@@ -173,3 +174,25 @@ class GameTest(unittest.TestCase):
 
         self.assertTrue(is_a_ghost(map, 3, 1))
         self.assertFalse(is_a_ghost(map, 3, 3))
+
+    def test_remaining_pills(self):
+        map_with_pills = [
+            "|--------|",
+            "|G..|..G.|",
+            "|...PP...|",
+            "|G...@.|.|",
+            "|........|",
+            "|--------|"
+        ]
+
+        map_without_pills = [
+            "|--------|",
+            "|G..|..G.|",
+            "|...@....|",
+            "|G.....|.|",
+            "|........|",
+            "|--------|"
+        ]
+
+        self.assertTrue(is_there_remaining_pills(map_with_pills))
+        self.assertFalse(is_there_remaining_pills(map_without_pills))
