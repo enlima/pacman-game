@@ -1,47 +1,19 @@
-from pacman.ui import ui_print
-
-# @ -> pacman
-# G -> ghosts
-# P -> pills
-# . -> empty spaces
-# | and - -> walls
-game_map = [
-    "|--------|",
-    "|G..|..G.|",
-    "|...PP...|",
-    "|G...@.|.|",
-    "|........|",
-    "|--------|"
-]
+from pacman.result_enum import Result
 
 
 def play(game_map, key):
-    if is_valid_key(key):
-        next_x_pos, next_y_pos = calculate_next_position(game_map, key)
+    next_x_pos, next_y_pos = calculate_next_position(game_map, key)
 
-        if is_within_borders(game_map, next_x_pos, next_y_pos) and not is_a_wall(game_map, next_x_pos, next_y_pos):
-            if is_a_ghost(game_map, next_x_pos, next_y_pos):
-                print("====================")
-                print("= GG Game Over! GG =")
-                print("====================")
-            else:
-                move_pacman(game_map, next_x_pos, next_y_pos)
+    if is_within_borders(game_map, next_x_pos, next_y_pos) and not is_a_wall(game_map, next_x_pos, next_y_pos):
+        if is_a_ghost(game_map, next_x_pos, next_y_pos):
+            return Result.GAME_OVER
+        else:
+            move_pacman(game_map, next_x_pos, next_y_pos)
 
-        if not is_there_remaining_pills(game_map):
-            print("====================")
-            print("= @@ YOU WON!!! @@ =")
-            print("=     CONGRATS     =")
-            print("====================")
+    if not is_there_remaining_pills(game_map):
+        return Result.VICTORY
 
-
-def is_valid_key(key):
-    if key.lower() in ['a', 'w', 'd', 's']:
-        return True
-
-    print("Invalid key!")
-    print("Press 'A' to move left, 'W' to move up, 'D' to move right or 'S' to move down.")
-
-    return False
+    return Result.CONTINUE
 
 
 def calculate_next_position(game_map, key):
@@ -110,12 +82,3 @@ def move_pacman(game_map, next_pacman_x, next_pacman_y):
     # moves pacman to his new position
     game_map[next_pacman_x] = game_map[next_pacman_x][0:next_pacman_y] + '@' + game_map[next_pacman_x][
                                                                                next_pacman_y + 1:]
-
-
-ui_print(game_map)
-play(game_map, 'x')
-ui_print(game_map)
-play(game_map, 'w')
-ui_print(game_map)
-play(game_map, 'a')
-ui_print(game_map)

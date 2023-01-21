@@ -1,7 +1,8 @@
 import unittest
 
-from pacman.game import find_pacman, move_pacman, play, is_valid_key, is_within_borders, is_a_wall, is_a_ghost, \
-    is_there_remaining_pills
+from pacman.game import find_pacman, move_pacman, is_within_borders, is_a_wall, is_a_ghost, \
+    is_there_remaining_pills, calculate_next_position
+from pacman.ui import is_valid_key
 
 
 class GameTest(unittest.TestCase):
@@ -65,41 +66,7 @@ class GameTest(unittest.TestCase):
         self.assertFalse(is_valid_key('x'))
         self.assertFalse(is_valid_key('y'))
 
-    def test_play_move_left(self):
-        game_map = [
-            "|--------|",
-            "|G..|..G.|",
-            "|...PP...|",
-            "|G...@.|.|",
-            "|........|",
-            "|--------|"
-        ]
-
-        play(game_map, 'a')
-
-        position_x, position_y = find_pacman(game_map)
-
-        self.assertEqual(position_x, 3)
-        self.assertEqual(position_y, 4)
-
-    def test_play_move_right(self):
-        game_map = [
-            "|--------|",
-            "|G..|..G.|",
-            "|...PP...|",
-            "|G...@.|.|",
-            "|........|",
-            "|--------|"
-        ]
-
-        play(game_map, 'd')
-
-        position_x, position_y = find_pacman(game_map)
-
-        self.assertEqual(position_x, 3)
-        self.assertEqual(position_y, 6)
-
-    def test_play_move_up(self):
+    def test_calculate_next_position(self):
         game_map = [
             "|--------|",
             "|G..|..G.|",
@@ -109,31 +76,12 @@ class GameTest(unittest.TestCase):
             "|--------|"
         ]
 
-        play(game_map, 'w')
+        self.assertEqual((calculate_next_position(game_map, 'a')), (3, 4))
+        self.assertEqual((calculate_next_position(game_map, 'd')), (3, 6))
+        self.assertEqual((calculate_next_position(game_map, 'w')), (2, 5))
+        self.assertEqual((calculate_next_position(game_map, 's')), (4, 5))
 
-        position_x, position_y = find_pacman(game_map)
-
-        self.assertEqual(position_x, 2)
-        self.assertEqual(position_y, 5)
-
-    def test_play_move_down(self):
-        game_map = [
-            "|--------|",
-            "|G..|..G.|",
-            "|..PP....|",
-            "|G...@.|.|",
-            "|........|",
-            "|--------|"
-        ]
-
-        play(game_map, 's')
-
-        position_x, position_y = find_pacman(game_map)
-
-        self.assertEqual(position_x, 4)
-        self.assertEqual(position_y, 5)
-
-    def test_within_borders(self):
+    def test_is_within_borders(self):
         game_map = [
             "|--------|",
             "|G..|..G.|",
@@ -175,7 +123,7 @@ class GameTest(unittest.TestCase):
         self.assertTrue(is_a_ghost(game_map, 3, 1))
         self.assertFalse(is_a_ghost(game_map, 3, 3))
 
-    def test_remaining_pills(self):
+    def test_is_there_remaining_pills(self):
         game_map_with_pills = [
             "|--------|",
             "|G..|..G.|",
