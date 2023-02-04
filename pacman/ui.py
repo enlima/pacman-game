@@ -1,8 +1,56 @@
+# ASCII arts from https://www.asciiart.eu/video-games/pacman
+ui_pacman = [
+    " .--. ",
+    "/ _.-'",
+    "\\  '-.",
+    " '--' "
+]
+
+ui_ghost = [
+    " .-.  ",
+    "| OO| ",
+    "|   | ",
+    "'^^^' "
+]
+
+ui_pill = [
+    "      ",
+    " .-.  ",
+    " '-'  ",
+    "      "
+]
+
+ui_empty = [
+    "      ",
+    "      ",
+    "      ",
+    "      "
+]
+
+ui_wall = [
+    "......",
+    "......",
+    "......",
+    "......"
+]
+
+
 def ui_print(game_map):
     for row in game_map:
-        for column in row:
-            print(column, end='')
-        print('')
+        for piece in range(4):
+            for column in row:
+                match column:
+                    case '.':
+                        print(ui_empty[piece], end='')
+                    case '-' | '|':
+                        print(ui_wall[piece], end='')
+                    case '@':
+                        print(ui_pacman[piece], end='')
+                    case 'G':
+                        print(ui_ghost[piece], end='')
+                    case 'P':
+                        print(ui_pill[piece], end='')
+            print('')
 
 
 def ui_key():
