@@ -1,7 +1,7 @@
 import unittest
 
 from pacman.game import find_pacman, move_pacman, is_within_borders, is_a_wall, is_a_ghost, \
-    is_there_remaining_pills, calculate_next_position, recreate_line
+    is_there_remaining_pills, calculate_next_position, recreate_line, find_all_ghosts
 from pacman.ui import is_valid_key
 
 
@@ -85,6 +85,7 @@ class GameTest(unittest.TestCase):
 
     def test_is_a_wall(self):
         game_map = get_map_limits()
+
         self.assertTrue(is_a_wall(game_map, 4, 9))
         self.assertTrue(is_a_wall(game_map, 5, 7))
         self.assertFalse(is_a_wall(game_map, 4, 8))
@@ -115,3 +116,8 @@ class GameTest(unittest.TestCase):
         self.assertEqual(recreate_line(game_map, 3, 5, '.'), "|G.....|.|")
         self.assertEqual(recreate_line(game_map, 4, 5, '@'), "|....@...|")
         self.assertEqual(recreate_line(game_map, 2, 1, 'G'), "|G..PP...|")
+
+    def test_find_all_ghosts(self):
+        game_map = get_map()
+
+        self.assertEqual([[1, 1], [1, 7], [3, 1]], find_all_ghosts(game_map))
