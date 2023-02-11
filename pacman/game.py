@@ -88,10 +88,9 @@ def move_pacman(game_map, next_pacman_x, next_pacman_y):
     pacman_x, pacman_y = find_pacman(game_map)
 
     # clears the position where pacman was
-    game_map[pacman_x] = game_map[pacman_x][0:pacman_y] + '.' + game_map[pacman_x][pacman_y + 1:]
+    game_map[pacman_x] = recreate_line(game_map, pacman_x, pacman_y, '.')
     # moves pacman to his new position
-    game_map[next_pacman_x] = game_map[next_pacman_x][0:next_pacman_y] + '@' + game_map[next_pacman_x][
-                                                                               next_pacman_y + 1:]
+    game_map[next_pacman_x] = recreate_line(game_map, next_pacman_x, next_pacman_y, '@')
 
 
 def move_ghosts(game_map):
@@ -128,12 +127,16 @@ def move_ghosts(game_map):
             return Result.GAME_OVER
 
         # clears the position where ghost was
-        game_map[ghost_x] = game_map[ghost_x][0:ghost_y] + '.' + game_map[ghost_x][ghost_y + 1:]
+        game_map[ghost_x] = recreate_line(game_map, ghost_x, ghost_y, '.')
         # moves ghost to his new position
-        game_map[next_ghost_x] = game_map[next_ghost_x][0:next_ghost_y] + 'G' + game_map[next_ghost_x][
-                                                                                next_ghost_y + 1:]
+        game_map[next_ghost_x] = recreate_line(game_map, next_ghost_x, next_ghost_y, 'G')
 
     return Result.CONTINUE
+
+
+# this function recreates the line replacing only the item between positions
+def recreate_line(game_map, pos_x, pos_y, replacement_item):
+    return game_map[pos_x][0:pos_y] + replacement_item + game_map[pos_x][pos_y + 1:]
 
 
 def find_all_ghosts(game_map):
